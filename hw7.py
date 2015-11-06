@@ -15,8 +15,8 @@ w['t|t_'] =  w['t|tt']*s['t']*r['t'] + w['t|tf']*s['t']*r['f'] / w['t']
 
 a = c['t']
 b = c['t']*r['t|t']/r['t']
-c = s['t']*w['t|t_']/w['t']
-d = s['t']
+c = s['t']*w['t|t_']
+d = s['t|t']*w['t|tt']+s['t|t']*w['t|tf']
 
 samp = [0.82,	0.56,	0.08,	0.81,	0.34,	0.22,	0.37,	0.99,	0.55,	0.61,	0.31,	0.66,	0.28,	1.0,	0.95,	
 0.71,	0.14,	0.1,	1.0,	0.71,	0.1,	0.6,	0.64,	0.73,	0.39,	0.03,	0.99,	1.0,	0.97,	0.54,	0.8,	0.97,	
@@ -135,7 +135,7 @@ print '3.b) rejection prob(c=t | r=t) =', rpcr
 
 #3c
 pw = 0.0
-psw = 0.0
+rpsw = 0.0
 num =0.0
 denom = 0.0
 count = 0.0
@@ -154,8 +154,8 @@ for i in range (0,100,2):
         denom = denom + 1
     if 0 <= samp[i+1] < w['t'] and 0 <= samp[i] < .1:
         num = num + 1	
-psw = num/denom
-print '3.c) rejected prob(s=t | w=t) =', psw	
+rpsw = num/denom
+print '3.c) rejected prob(s=t | w=t) =', rpsw	
 
 #3d
 rpscw = 0.0
@@ -169,6 +169,15 @@ for i in range (0,100,4):
 rpscw = rnum/rdenom
 print '3.d) rejected prob(s=t | c=t,w=t) =', rpscw	
 
+print '''4) Rejection sampling did not produce the same probabilities as prior sampling...'''
+print 'rel error prior: ', (abs(pc - a)/a)
+print 'rel error rejected: ', (abs(rpc - a)/a)
+print 'rel error prior: ', (abs(pcr - b)/b)
+print 'rel error rejected: ', (abs(rpcr - b)/b)
+print 'rel error prior: ', (abs(psw - c)/c)
+print 'rel error rejected: ', (abs(rpsw - c)/c)
+print 'rel error prior: ', (abs(pscw - d)/d)
+print 'rel error rejected: ', (abs(rpscw - d)/d)
 
 
 
